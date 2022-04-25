@@ -9,56 +9,55 @@ int main(void)
     setlocale(LC_ALL, "Portuguese");
 
     // Declaração das variáveis necessárias
-    int senha;
+    char nome[20];
+    int rodando;
+    int senha, quantidade, decisao_sessao, escolha_produto, verifica_usuario;
     float carrinho;
     float preco1 = 8.3;
     float preco2 = 9.4;
     float preco3 = 4.3;
     float preco4 = 15.6;
-    //Sistema
-    int rodando;
-    // Decisões
-    int decisao_sessao, escolha_produto, verifica_usuario;
+    
 
     // Mensagem de boas vindas
     printf("\n------ MERCADINHO BUG DA FOME ------\n");
     printf("  Bem-vindo ao Sistema de Compras!\n");
 
-    // Repetição do programa principal
     do
     {
         // Verificando se cliente ou funcionário
         int verifica_usuario = 0;
         while (verifica_usuario != 1 && verifica_usuario != 2)
         {
-            printf("\nDigite o número correspondente: \n 1 - "
-            "Funcionário \n 2 - Cliente\n");
-            printf("Resposta Nº: ");
+            printf("\nDigite o número correspondente: \n 1 -> Funcionário \n 2 -> Cliente\n");
+            printf("Resposta: ");
             scanf("%d", &verifica_usuario);
         }
 
-        // Se resposta for igual a 1 entrará na sessão do funcionário
+        // Diálogo com o cliente
+        printf("\nQual é o seu nome? ");
+        scanf("%s", nome);
+
+        // Sessão funcionário
         if (verifica_usuario == 1)
-        {
-            // Vericação da senha
-            printf("\nDigite sua senha: ");
+        {   
+            printf("\nÓtimo! %s, Agora informe a senha do sistema.", nome);
+
+            printf("\nDigite a senha: ");
             scanf("%d", &senha);
 
-            // Se a senha estiver correta entra em um loop
+            // Se a senha estiver correta entrará em loop
             if (senha == 1234)
             {
-                // Loop das alterações
-                do 
+                do
                 {
-                    // Valores dos produtos
-                    printf("\n----Acesso Liberado----\n");
+                    printf("\n\t---- Acesso Liberado ----\n");
                     printf("\nEscolha o produto que deseja alterar o valor:\n");
                     printf(" 1 -> 'Arroz': R$%.2f\n", preco1);
                     printf(" 2 -> 'Feijão': R$%.2f\n", preco2);
                     printf(" 3 -> 'Farinha': R$%.2f\n", preco3);
                     printf(" 4 -> 'Carne': R$%.2f\n", preco4);
 
-                    // Escolha do produto e alteração do preço com filtragem da entrada
                     escolha_produto = 0;
                     while (escolha_produto != 1 && escolha_produto != 2 && escolha_produto != 3 && escolha_produto != 4)
                     {
@@ -66,9 +65,9 @@ int main(void)
                         scanf("%d", &escolha_produto);
                     }
 
-                    // Condições da escolha do produto e alteração do valor
+                    // Condição para cada produto
                     if (escolha_produto == 1)
-                    {   
+                    {
                         printf("Digite o novo preço do 'Arroz': ");
                         scanf("%f", &preco1);
                         printf("Preço do 'Arroz' alterado com sucesso!\n");
@@ -92,7 +91,7 @@ int main(void)
                     {
                         printf("Digite o novo preço da 'Carne': ");
                         scanf("%f", &preco4);
-                        printf("Preço da 'Carne' alterada com sucesso!");
+                        printf("Preço da 'Carne' alterado com sucesso!");
 
                     }
 
@@ -112,35 +111,31 @@ int main(void)
                     }
 
                 } while (decisao_sessao != 2);
-                
+
             }
-            
+
             // Se a senha estiver incorreta feedback
             else
             {
-                // Feedback negativo
-                printf("\n----Senha incorreta----\n");
+                printf("\n\t---- Senha incorreta ----");
                 printf("\nTente acessar novamente mais tarde.\n");
             }
         }
 
-        // Se resposta for 2 entrará na sessão do cliente
+        // Sessão cliente
         else if (verifica_usuario == 2)
-        {
-            // Mensagem inicial
-            printf("\nOlá, Cliente amigo! ");
+        {   
+            // Dialogo com o cliente
+            printf("\nPerfeito! %s, Agora vamos as compras.", nome);
 
-            // Loop das compras
             do
             {
-                // Listagem de produtos
                 printf("\nEscolha o produto para adiciona-lo ao carrinho de compras: \n");
                 printf(" 1 -> 'Arroz': R$%.2f\n", preco1);
                 printf(" 2 -> 'Feijão': R$%.2f\n", preco2);
                 printf(" 3 -> 'Farinha': R$%.2f\n", preco3);
                 printf(" 4 -> 'Carne': R$%.2f\n", preco4);
 
-                // Escolha do produto com filtragem da entrada
                 escolha_produto = 0;
                 while (escolha_produto != 1 && escolha_produto != 2 && escolha_produto != 3 && escolha_produto != 4)
                 {
@@ -148,32 +143,41 @@ int main(void)
                     scanf("%d", &escolha_produto);
                 }
 
-                // Condições da escolha do produto e soma do valor
+                printf("Quantidade: ");
+                scanf("%d", &quantidade);
+
+                // Prevenindo a quantidade de produto ser igual a 0
+                if (quantidade == 0)
+                {
+                    quantidade = 1;
+                }
+
+                // Condição para cada produto
                 if (escolha_produto == 1)
                 {
-                    carrinho += preco1;
-                    printf("'Arroz' Adicionado ao carrinho!\n");
+                    carrinho += (preco1 * quantidade);
+                    printf("%dx 'Arroz' Adicionado ao carrinho!\n", quantidade);
                 }
 
                 else if (escolha_produto == 2)
                 {
-                    carrinho += preco2;
-                    printf("'Feijão' Adicionado ao carrinho!\n");
+                    carrinho += (preco2 * quantidade);
+                    printf("%dx 'Feijão' Adicionado ao carrinho!\n", quantidade);
                 }
 
                 else if (escolha_produto == 3)
                 {
-                    carrinho += preco3;
-                    printf("'Farinha' Adicionado ao carrinho!\n");
+                    carrinho += (preco3 * quantidade);
+                    printf("%dx 'Farinha' Adicionado ao carrinho!\n", quantidade);
                 }
 
                 else if (escolha_produto == 4)
                 {
-                    carrinho += preco4;
-                    printf("'Carne' Adicionado ao carrinho!\n");
+                    carrinho += (preco4 * quantidade);
+                    printf("%dx 'Carne' Adicionado ao carrinho!\n", quantidade);
                 }
-                
-                // Mostrando carrinho depois da escolha
+
+                // Mostrando carrinho
                 printf("Valor total: R$%.2f\n", carrinho);
 
                 // Cliente decide se quer ou não sair da sessão
@@ -195,14 +199,14 @@ int main(void)
                 } while (decisao_sessao != 2);
         }
 
-        // Escolha do usuario para continuar ou fechar o programa
-        printf("\nDeseja continuar no nosso sistema?\n 1 - 'Sim'\n 2 - 'Não'\n");
+        // Finalizar programa
+        printf("\nDeseja continuar no nosso sistema?\n 1 -> 'Sim'\n 2 -> 'Não'\n");
         printf("Escolha: ");
         scanf("%d", &rodando);
 
     } while (rodando != 2);
 
-    // Mensagem de despedida
+    // Mensagem de despedidas
     printf("\n ------ Agradecemos a sua preferência! ------\n");
     printf("\n Código: Victor, Priscila e Luan.");
 
